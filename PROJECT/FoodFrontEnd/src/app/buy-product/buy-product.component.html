@@ -1,0 +1,105 @@
+<div class="container mt-5">
+    <div class="card p-3">
+        <div class="row">
+            <div class="col-6">
+
+                <form #orderForm="ngForm"
+                      (ngSubmit)="createTransactionAndPlaceOrder(orderForm)">
+
+                    <mat-form-field appearance="outline"
+                                    class="w-100">
+                        <mat-label>Full name</mat-label>
+                        <input matInput required
+                               placeholder="Full name"
+                               [(ngModel)]="orderDetails.fullName"
+                               name="fullName">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline"
+                                    class="w-100">
+                        <mat-label>Full address</mat-label>
+                        <input matInput required
+                               placeholder="Full address"
+                               [(ngModel)]="orderDetails.fullAddress"
+                               name="fullAddress">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline"
+                                    class="w-100">
+                        <mat-label>Contact number</mat-label>
+                        <input matInput required
+                               placeholder="Contact number"
+                               [(ngModel)]="orderDetails.contactNumber"
+                               name="contactNumber">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline"
+                                    class="w-100">
+                        <mat-label>Alternate contact number</mat-label>
+                        <input matInput required
+                               placeholder="Alternate contact number"
+                               [(ngModel)]="orderDetails.alternateContactNumber"
+                               name="alternateContactNumber">
+                    </mat-form-field>
+
+                    <div align="right">
+                        <button type="submit" mat-stroked-button color="primary">Place Order</button>
+                    </div>
+                </form>
+
+            </div>
+            <div class="col-6">
+                <table class="table">
+                    <thead class="thead">
+                        <tr>
+                            <th>Dish Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody">
+                        <tr *ngFor="let product of productDetails">
+                            <td>{{product.productName}}</td>
+                            <td>{{product.productActualPrice}}</td>
+                            <td>
+                                <!-- <select 
+                                #quantity
+                                class="form-select"
+                                [ngModel]="getQuantityForProduct(product.productId)"
+                                (change)="onQuantityChanged(quantity.value, product.productId)"
+                                >
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select> -->
+
+                                <select 
+    #quantity
+    class="form-select"
+    [ngModel]="getQuantityForProduct(product.productId)"
+    (change)="onQuantityChanged(quantity.value, product.productId)">
+    
+    <option *ngFor="let q of quantities" [value]="q">{{ q }}</option>
+</select>
+
+
+                                
+                            </td>
+                            <td>
+                                {{getCalculatedTotal(product.productId, product.productActualPrice)}}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>Total</td>
+                            <td> {{getCalculatedGrandTotal()}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
